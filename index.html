@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tiny To-Do</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 420px; margin: 40px auto; padding: 0 16px; }
+    form { display: flex; gap: 8px; }
+    input { flex: 1; padding: 8px; }
+    button { padding: 8px 12px; cursor: pointer; }
+    li { padding: 6px 0; }
+  </style>
+</head>
+<body>
+  <h1>Tiny To-Do</h1>
+  <form id="add-form">
+    <input id="new-item" placeholder="What needs doing?" aria-label="New to-do">
+    <button type="submit">Add</button>
+  </form>
+  <p id="count">0 items</p>
+  <ul id="list"></ul>
+  <button id="clear">Clear all</button>
+
+  <script>
+    const items = [];
+    const list = document.getElementById('list');
+    const count = document.getElementById('count');
+
+    function render() {
+      list.innerHTML = '';
+      for (const text of items) {
+        const li = document.createElement('li');
+        li.textContent = text;
+        list.appendChild(li);
+      }
+      count.textContent = items.length + (items.length === 1 ? ' item' : ' items');
+    }
+
+    document.getElementById('add-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const input = document.getElementById('new-item');
+      const text = input.value.trim();
+      if (!text) return;
+      items.push(text);
+      input.value = '';
+      render();
+    });
+
+    // Clear all: empties the list
+    document.getElementById('clear').addEventListener('click', () => {
+      items.length = 0;
+      render();
+    });
+  </script>
+</body>
+</html>
