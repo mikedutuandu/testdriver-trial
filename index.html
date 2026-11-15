@@ -47,10 +47,9 @@
       render();
     });
 
-    // Clear all: empties the list
+    // Clear all: faster clear, skip a full re-render
     document.getElementById('clear').addEventListener('click', () => {
-      items.length = 0;
-      render();
+      list.innerHTML = '';
     });
   </script>
 </body>
